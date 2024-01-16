@@ -1,0 +1,128 @@
+C51 COMPILER V9.60.0.0   UART                                                              01/12/2024 22:11:18 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE UART
+OBJECT MODULE PLACED IN .\OBJ\uart.obj
+COMPILER INVOKED BY: D:\keil\KEIL_MDK\C51\BIN\C51.EXE APP\uart\uart.c LARGE ROM(COMPACT) OPTIMIZE(0,SPEED) BROWSE INCDIR
+                    -(.\APP\base;.\APP\LoRa;.\APP\uart;.\APP\MidWare;.\APP\numTools) DEBUG OBJECTEXTEND PRINT(.\uart.lst) OBJECT(.\OBJ\uart.o
+                    -bj)
+
+line level    source
+
+   1          #include "typedef.h"
+   2          #include "gpio.h"
+   3          #include "uart.h"
+   4          #include "synchron.h"
+   5          
+   6          static bit bUartFlag;
+   7          bit busy;
+   8          
+   9          u16 USART_RX_STA=0;       //接收状态标记  
+  10          u8 USART_RX_BUF[USART_REC_LEN] = {0};
+  11          
+  12          
+  13          //初始化串口
+  14          void UartInit(void)
+  15          {
+  16   1              SCON = 0x50;    
+  17   1              T2L = (65536 - MCU_FREQ /4 / UART_BUAD);
+  18   1              T2H = (65536 - MCU_FREQ /4 / UART_BUAD) >> 8;
+  19   1              AUXR = 0x14;
+  20   1              AUXR |= 0x01;
+  21   1              ES = 1;
+  22   1              EA = 1;
+  23   1              TI = 0;
+  24   1      }
+  25          
+  26          
+  27          void UART_SendData(unsigned char Byte)
+  28          {
+  29   1              u8 temp;
+  30   1              while(busy);
+  31   1      //      ACC = Byte;
+  32   1              temp = Byte;
+  33   1              TB8 = 0;
+  34   1              
+  35   1              busy = 1;
+  36   1              SBUF = temp;
+  37   1      }
+  38          
+  39          /******************************************************************************/
+  40          // 函数名称uartSendString 
+  41          // 输入参数:ps:字符串首地址
+  42          // 输出参数:无
+  43          // 串口功能:发送字符串通过串口输出
+  44          /******************************************************************************/
+  45          void uartSend(u8 *pS, u8 len)
+  46          {
+  47   1          UART_SendData(0xaa);
+  48   1          while (len--)                     
+  49   1          {
+  50   2              UART_SendData(*pS++);
+  51   2          }
+  52   1              UART_SendData(0xbb);
+  53   1      }
+C51 COMPILER V9.60.0.0   UART                                                              01/12/2024 22:11:18 PAGE 2   
+
+  54          
+  55          
+  56          void UART_Routine()    interrupt 4 using 1
+  57          {
+  58   1              u8 res = 0;
+  59   1              if(TI)
+  60   1              {
+  61   2                      TI=0;                   //清除发送完成标志位
+  62   2                      busy = 0;
+  63   2              }
+  64   1              if(RI)
+  65   1              {
+  66   2                      RI = 0;
+  67   2                      
+  68   2                      res = SBUF;
+  69   2                      
+  70   2                      
+  71   2                      if(USART_RX_STA&0x4000)                                         //若已经开始接收
+  72   2                      {
+  73   3                              
+  74   3                              if(res == 0xbb)                                                 //若当前帧是结束帧
+  75   3                              {
+  76   4                                      USART_RX_STA |= 0x8000;                         //接收已完成
+  77   4                                      USART_RX_BUF[USART_RX_STA&0X3FFF]='\0';
+  78   4                              }
+  79   3                              else
+  80   3                              {
+  81   4                                      USART_RX_BUF[USART_RX_STA&0X3FFF]=res ;
+  82   4                                      USART_RX_STA++;
+  83   4      //                              synPeriod*=10;  synPeriod+=res;         //获得当前同步周期数
+  84   4                              }
+  85   3                      }
+  86   2                      
+  87   2                      if(res == 0xaa)                                                         //起始帧
+  88   2                      {
+  89   3                              USART_RX_STA = 0;
+  90   3                              USART_RX_STA |= 0x4000;                                 //接收开始标志
+  91   3                      }
+  92   2                      
+  93   2                      if((USART_RX_STA&0X3FFF) > USART_REC_LEN)
+  94   2                      {
+  95   3                              USART_RX_STA = 0;
+  96   3                      }
+  97   2                              
+  98   2                      
+  99   2              }
+ 100   1              
+ 101   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    343    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =     29    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =      2    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,97 @@
+C51 COMPILER V9.60.0.0   MAIN                                                              01/12/2024 22:11:18 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\OBJ\MAIN.obj
+COMPILER INVOKED BY: D:\keil\KEIL_MDK\C51\BIN\C51.EXE MAIN.C LARGE ROM(COMPACT) OPTIMIZE(0,SPEED) BROWSE INCDIR(.\APP\ba
+                    -se;.\APP\LoRa;.\APP\uart;.\APP\MidWare;.\APP\numTools) DEBUG OBJECTEXTEND OBJECT(.\OBJ\MAIN.obj)
+
+line level    source
+
+   1          #include "typedef.h"
+   2          #include "gpio.h"
+   3          #include "string.h"
+   4          #include "uart.h"
+   5          #include "SX1278.h"
+   6          #include "synchron.h"
+   7          #include "stdio.h"
+   8          #include "delay.h"
+   9          #include "lora.h"
+  10          #include "numtools.h"
+  11          
+  12          extern u8 USART_RX_BUF[USART_REC_LEN];
+  13          extern u16 USART_RX_STA;
+  14          extern u16 currentNode;
+  15          extern unsigned char recv[20];
+  16          
+  17          char contextBuffer[8]="";
+  18          u16 wet=60, tem=26, swi=11, pwr=88;
+  19          u8 tx_buff[12]={0};
+  20          u8      cycle_num = 0, 
+  21                  stationReady = 0, 
+  22                  timeout = 0, 
+  23                  retryNum = 0;
+  24          
+  25          
+  26          
+  27          void main(void) 
+  28          {
+  29   1              synPeriod.word = 0;
+  30   1              
+  31   1              UartInit();
+  32   1              hardwareInit();
+  33   1              loraInit();
+  34   1              
+  35   1              while (1) 
+  36   1              {
+  37   2                      loraCommunicateStart();                 //唤醒节点
+  38   2                      
+  39   2                      while(synPeriod.word <= 25)
+  40   2                      {
+  41   3                              loraTx(synPeriod.byte, 2);
+  42   3                              uartSend(&synPeriod.byte, 2);
+  43   3                              retryNum++;
+  44   3      //                      if(retryNum >= 500)
+  45   3      //                      {
+  46   3      //                              timeout = 1;
+  47   3      //                      }
+  48   3                              stationReady = getReadySign();                  //暂时用KEY0替代
+  49   3                              
+  50   3                              if((stationReady == 0xff) || (timeout == 1))
+  51   3                              {
+  52   4                                      synPeriod.word++;
+  53   4                                      timeout = 0;
+  54   4                                      retryNum = 0;
+C51 COMPILER V9.60.0.0   MAIN                                                              01/12/2024 22:11:18 PAGE 2   
+
+  55   4                              }
+  56   3                              
+  57   3                              if(synPeriod.word == 1)
+  58   3                                      LED0 = 0;
+  59   3                              else
+  60   3                                      LED0 = 1;                       
+  61   3                              
+  62   3                              LED1 = !LED1;
+  63   3                              Delay1s(100);
+  64   3                      }
+  65   2      
+  66   2      //              loraNodeSleep();
+  67   2              }
+  68   1      }
+  69          
+  70          
+  71          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    157    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =     32    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

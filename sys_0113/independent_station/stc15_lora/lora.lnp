@@ -1,0 +1,5 @@
+"MAIN.obj",
+"UART.obj",
+"sx1278.obj" 
+TO "lora" 
+RAMSIZE(256) 

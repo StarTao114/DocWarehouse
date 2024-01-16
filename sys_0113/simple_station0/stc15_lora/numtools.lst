@@ -1,0 +1,39 @@
+C51 COMPILER V9.60.0.0   NUMTOOLS                                                          01/13/2024 20:02:51 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE NUMTOOLS
+OBJECT MODULE PLACED IN .\OBJ\numtools.obj
+COMPILER INVOKED BY: D:\keil\KEIL_MDK\C51\BIN\C51.EXE APP\numTools\numtools.c LARGE ROM(COMPACT) OPTIMIZE(6,SIZE) BROWSE
+                    - INCDIR(.\APP\base;.\APP\LoRa;.\APP\uart;.\APP\MidWare) DEBUG OBJECTEXTEND PRINT(.\numtools.lst) OBJECT(.\OBJ\numtools.o
+                    -bj)
+
+line level    source
+
+   1          #include "numtools.h"
+   2          
+   3          #if NUMTOOLS
+              
+              void num2ascii(u16 num, u8 *ascii_buff)
+              {
+                      ascii_buff[0] = (u8)(num / 100)+48;
+                      ascii_buff[1] = (u8)(num % 100 / 10)+48;
+                      ascii_buff[2] = (u8)(num % 10)+48;
+                      ascii_buff[3] = '\0';
+                      
+              }
+              
+              #endif
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   ----    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

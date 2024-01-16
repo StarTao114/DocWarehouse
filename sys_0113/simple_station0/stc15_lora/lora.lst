@@ -1,0 +1,273 @@
+C51 COMPILER V9.60.0.0   LORA                                                              01/13/2024 20:02:51 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE LORA
+OBJECT MODULE PLACED IN .\OBJ\lora.obj
+COMPILER INVOKED BY: D:\keil\KEIL_MDK\C51\BIN\C51.EXE APP\LoRa\lora.c LARGE ROM(COMPACT) OPTIMIZE(6,SIZE) BROWSE INCDIR(
+                    -.\APP\base;.\APP\LoRa;.\APP\uart;.\APP\MidWare) DEBUG OBJECTEXTEND PRINT(.\lora.lst) OBJECT(.\OBJ\lora.obj)
+
+line level    source
+
+   1          #include "lora.h"
+   2          #include "stdio.h"
+   3          #include "gpio.h"
+   4          #include "sx1278.h"
+   5          #include "synchron.h"
+   6          
+   7          extern u16 lastPeriod;
+   8          extern u8 synReady;
+   9          extern u16 currentNode;
+  10          
+  11          u8 nodeBrokenFlag = 0;
+  12          unsigned char recv[20];
+  13          u8 overTime = 0;
+  14          
+  15          void loraInit(void)
+  16          {
+  17   1              register_rf_func(&ctrlTypefunc);        //注册LoRa回调
+  18   1              SX1276Reset();          //复位LoRa模块
+  19   1              SX1276LORA_INT();
+  20   1              
+  21   1      //      SX1276WriteBuffer( REG_LR_IRQFLAGS, 0xff);                                              //清空各种中断标志寄存器
+  22   1      }
+  23          
+  24          void loraTx(u8 *dat, u8 len)
+  25          {
+  26   1              SX1276WriteBuffer( REG_LR_IRQFLAGS, 0xff);                                              //清空各种中断标志寄存器
+  27   1              FUN_RF_SENDPACKET(dat, len);
+  28   1              Delay1s(500);
+  29   1      //      SX1276WriteBuffer( REG_LR_IRQFLAGS, 0xff);
+  30   1      }
+  31          
+  32          //void loraTxByte(u8 dat)
+  33          //{
+  34          //      u8 array[10] = {0};
+  35          //      
+  36          //      SX1276WriteBuffer( REG_LR_IRQFLAGS, 0xff);                                              //清空各种中断标志寄存器
+  37          //      sprintf(array, "%d", dat);
+  38          //      FUN_RF_SENDPACKET(array, 8);
+  39          //}
+  40          
+  41          //void loraTxArray(u8 *arr, u8 len)
+  42          //{
+  43          //      while(len--)
+  44          //      {
+  45          //              loraTxByte(*arr);
+  46          //              arr++;
+  47          //      }
+  48          //}
+  49          
+  50          
+  51          void loraRxData(void)
+  52          {
+  53   1              unsigned char RF_REC_RLEN_i = 0;
+  54   1              u8 crcCheck = 0;
+C51 COMPILER V9.60.0.0   LORA                                                              01/13/2024 20:02:51 PAGE 2   
+
+  55   1              
+  56   1              RF_EX0_STATUS = SX1276ReadBuffer( REG_LR_IRQFLAGS);
+  57   1              if (RF_EX0_STATUS > 0) 
+  58   1              {
+  59   2                      if ((RF_EX0_STATUS & 0x40) == 0x40) //若接收结束
+  60   2                      {
+  61   3                              CRC_Value = SX1276ReadBuffer( REG_LR_MODEMCONFIG2);
+  62   3                              if (CRC_Value & 0x04 == 0x04)                   //若发送端开启了CRC
+  63   3                              {
+  64   4                                      SX1276WriteBuffer(REG_LR_FIFOADDRPTR, 0x00);
+  65   4                                      SX1278_RLEN = SX1276ReadBuffer(REG_LR_NBRXBYTES);
+  66   4                                      lpTypefunc.lpSwitchEnStatus(enOpen);
+  67   4                                      lpTypefunc.lpByteWritefunc(0x00);
+  68   4                                      
+  69   4                                      for (RF_REC_RLEN_i = 0; RF_REC_RLEN_i < SX1278_RLEN;RF_REC_RLEN_i++) 
+  70   4                                      {
+  71   5                                              recv[RF_REC_RLEN_i] = lpTypefunc.lpByteReadfunc();
+  72   5                                      }
+  73   4                                      lpTypefunc.lpSwitchEnStatus(enClose);
+  74   4                                      recv[RF_REC_RLEN_i] = '\0';
+  75   4                                      RF_RECEIVE();   
+  76   4      //                              SX1276WriteBuffer( REG_LR_IRQFLAGS, 0xff);              
+  77   4      //                              uartSendString(recv);                           //测试使用
+  78   4                                      LED1 = 0;
+  79   4                              }
+  80   3                      } 
+  81   2                      else if ((RF_EX0_STATUS & 0x04) == 0x04) 
+  82   2                      {
+  83   3                              if ((RF_EX0_STATUS & 0x01) == 0x01) //表示CAD 检测到扩频信号 模块进入了接收状态来接收数据
+  84   3                              { 
+  85   4                                      SX1276LoRaSetOpMode(Stdby_mode);
+  86   4                                      SX1276WriteBuffer(REG_LR_IRQFLAGSMASK, IRQN_RXD_Value); //打开发送中断
+  87   4                                      SX1276WriteBuffer(REG_LR_HOPPERIOD, PACKET_MIAX_Value);
+  88   4                                      SX1276WriteBuffer( REG_LR_DIOMAPPING1, 0X02);
+  89   4                                      SX1276WriteBuffer( REG_LR_DIOMAPPING2, 0x00);
+  90   4                                      SX1276LoRaSetOpMode(Receiver_mode);
+  91   4                              } 
+  92   3                              else 
+  93   3                              {                          
+  94   4                                      SX1276LoRaSetOpMode(Stdby_mode);
+  95   4                                      SX1276WriteBuffer(REG_LR_IRQFLAGSMASK,IRQN_SEELP_Value);   //打开发送中断
+  96   4                                      SX1276WriteBuffer( REG_LR_DIOMAPPING1, 0X00);
+  97   4                                      SX1276WriteBuffer( REG_LR_DIOMAPPING2, 0X00);
+  98   4                                      SX1276LoRaSetOpMode(Sleep_mode);
+  99   4                                      //PA_SEELP_OUT();
+ 100   4                              }
+ 101   3                      }
+ 102   2                      else 
+ 103   2                      {
+ 104   3                              SX1276LoRaSetOpMode(Stdby_mode);
+ 105   3                              SX1276WriteBuffer(REG_LR_IRQFLAGSMASK, IRQN_RXD_Value);  //打开发送中断
+ 106   3                              SX1276WriteBuffer(REG_LR_HOPPERIOD, PACKET_MIAX_Value);
+ 107   3                              SX1276WriteBuffer( REG_LR_DIOMAPPING1, 0x02);
+ 108   3                              SX1276WriteBuffer( REG_LR_DIOMAPPING2, 0x00);
+ 109   3                              SX1276LoRaSetOpMode(Receiver_mode);
+ 110   3                      }
+ 111   2                      RF_REC_RLEN_i = 0;
+ 112   2                      SX1276WriteBuffer( REG_LR_IRQFLAGS, 0xff);
+ 113   2                      Delay100ms();Delay100ms();
+*** WARNING C206 IN LINE 113 OF APP\LoRa\lora.c: 'Delay100ms': missing function-prototype
+ 114   2              }
+ 115   1              else
+C51 COMPILER V9.60.0.0   LORA                                                              01/13/2024 20:02:51 PAGE 3   
+
+ 116   1              {
+ 117   2                      LED1 = 1;
+ 118   2                      
+ 119   2              }
+ 120   1      }
+ 121          
+ 122          
+ 123          //对接新节点后，判断节点工作状态
+ 124          void loraNodeCheck(void)
+ 125          {
+ 126   1              if(currentNode != (synPeriod.word /11*8 + loraStationNum))                      //若通信目标节点发生变化
+ 127   1              {
+ 128   2                      LED1 = 0;
+ 129   2                      do
+ 130   2                      {
+ 131   3                              loraRxData();
+ 132   3      //                      synReady = 0;
+ 133   3                              overTime++;
+ 134   3                      }while(recv[0] != nodeReadyFlag && overTime < 500);     //收到应答或等待超时，跳出
+ 135   2                      
+ 136   2                      currentNode = synPeriod.word /11*8 + loraStationNum;    //更新通信节点编号
+ 137   2                      
+ 138   2                      if(overTime < 500)                                                                              //若收到应答，超时次数清空
+ 139   2                      {
+ 140   3                              LED1 = 1;
+ 141   3                              synReady = 1;                                                                                   //节点就绪标志位，LED1仅为测试阶段使用
+ 142   3                              overTime = 0;                   
+ 143   3                      }               
+ 144   2                      else
+ 145   2                      {
+ 146   3                              synReady = 0;
+ 147   3                      }
+ 148   2                      
+ 149   2                      //若超时次数过多，或已经有两个周期没有收到就绪报文，则视为节点损坏
+ 150   2                      //这部分需要统一加入看门狗
+ 151   2      //              if(overTime > bokenThreshold || (synPeriod - lastPeriod) > 1)   
+ 152   2      //              {
+ 153   2      //                      nodeBrokenFlag = 1
+ 154   2      //              }
+ 155   2              }
+ 156   1      }
+ 157          
+ 158          void loraNextPactet(void)
+ 159          {
+ 160   1              u8 buffer[8] = {0};
+ 161   1              u8 crcCheck = 0;
+ 162   1              
+ 163   1              while(currentNode == (synPeriod.word /11*8 + loraStationNum))
+ 164   1              {
+ 165   2                      if(lastPeriod != synPeriod.word)                                //若周期发生更新
+ 166   2                      {
+ 167   3                              buffer[0]='C'; buffer[1]='N';
+ 168   3                              loraTx(buffer, 2);
+ 169   3                              loraRxData();
+ 170   3                      }
+ 171   2              }
+ 172   1              
+ 173   1              
+ 174   1              
+ 175   1              crcCheck = SX1276ReadBuffer(RegIrqFlags2);      
+ 176   1              if((crcCheck & 0x02) != 0x02)
+ 177   1              {
+C51 COMPILER V9.60.0.0   LORA                                                              01/13/2024 20:02:51 PAGE 4   
+
+ 178   2                      buffer[0]='C'; buffer[1]='R';
+ 179   2                      loraTx(buffer, 2);
+ 180   2                      LED0 = 0;
+ 181   2              }
+ 182   1              
+ 183   1              do
+ 184   1              {
+ 185   2                      loraRxData();
+ 186   2                      crcCheck = SX1276ReadBuffer(RegIrqFlags2);
+ 187   2                      if((synPeriod.word - lastPeriod) > 1)
+ 188   2                      {
+ 189   3                              lastPeriod = synPeriod.word;
+ 190   3                              overTime++;
+ 191   3                              return;
+ 192   3                      }
+ 193   2                      
+ 194   2      //              if(KEY0 == 0)
+ 195   2      //                      break;                  //测试用
+ 196   2                      
+ 197   2              }while((crcCheck & 0x02) != 0x02);              //若CRC校验失败
+ 198   1              
+ 199   1              loraStationFreqHopping();
+ 200   1              lastPeriod = synPeriod.word;
+ 201   1              LED0 = 1;
+ 202   1      }
+ 203          
+ 204          
+ 205          void loraStationFreqHopping(void)
+ 206          {
+ 207   1      //1号电台使用
+ 208   1              if(synPeriod.word % 2 == 0)
+ 209   1              {
+ 210   2                      Frequency[0] = 0x68;
+ 211   2                      Frequency[1] = 0xB7;
+ 212   2                      Frequency[2] = 0xA6;
+ 213   2              }
+ 214   1              else
+ 215   1              {
+ 216   2                      Frequency[0] = 0x75;
+ 217   2                      Frequency[1] = 0x53;
+ 218   2                      Frequency[2] = 0x7A;
+ 219   2              }
+ 220   1              
+ 221   1      //0号电台使用
+ 222   1      //      if(synPeriod.word % 2 == 0)
+ 223   1      //      {
+ 224   1      //              Frequency[0] = 0x67;
+ 225   1      //              Frequency[1] = 0x74;
+ 226   1      //              Frequency[2] = 0xDE;
+ 227   1      //      }
+ 228   1      //      else
+ 229   1      //      {
+ 230   1      //              Frequency[0] = 0x74;
+ 231   1      //              Frequency[1] = 0x10;
+ 232   1      //              Frequency[2] = 0xB2;
+ 233   1      //      }
+ 234   1              
+ 235   1      //              Frequency[0] = 0x68;
+ 236   1      //              Frequency[1] = 0xB7;
+ 237   1      //              Frequency[2] = 0xA6;
+ 238   1              loraInit();
+ 239   1      }
+C51 COMPILER V9.60.0.0   LORA                                                              01/13/2024 20:02:51 PAGE 5   
+
+ 240          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    811    ----
+   CONSTANT SIZE    =      8    ----
+   XDATA SIZE       =     22      15
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  1 WARNING(S),  0 ERROR(S)

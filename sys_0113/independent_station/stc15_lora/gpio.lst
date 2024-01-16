@@ -1,0 +1,44 @@
+C51 COMPILER V9.60.0.0   GPIO                                                              01/12/2024 22:11:18 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE GPIO
+OBJECT MODULE PLACED IN .\OBJ\gpio.obj
+COMPILER INVOKED BY: D:\keil\KEIL_MDK\C51\BIN\C51.EXE APP\base\gpio.c LARGE ROM(COMPACT) OPTIMIZE(0,SPEED) BROWSE INCDIR
+                    -(.\APP\base;.\APP\LoRa;.\APP\uart;.\APP\MidWare;.\APP\numTools) DEBUG OBJECTEXTEND PRINT(.\gpio.lst) OBJECT(.\OBJ\gpio.o
+                    -bj)
+
+line level    source
+
+   1          
+   2          #ifndef _GPIO_H
+   3          #define _GPIO_H
+   4          
+   5          #include "typedef.h"
+   6          #include "gpio.h"
+   7          
+   8          void hardwareInit(void)
+   9          {
+  10   1              P1M1 = 0X03;            //P10和P11为准双向IO
+  11   1              P1M0 = 0XFC;            //P12到P17推挽输出
+  12   1              P3M1 &= 0XFC;           //P30和P31保持
+  13   1              P3M0 |= 0X04;           //P32推挽输出
+  14   1              
+  15   1              LED1 = 1;
+  16   1              LED0 = 1;
+  17   1      }
+  18          
+  19          #endif
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     17    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

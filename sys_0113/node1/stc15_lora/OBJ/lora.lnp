@@ -1,0 +1,11 @@
+".\OBJ\MAIN.obj",
+".\OBJ\sx1278.obj",
+".\OBJ\uart.obj",
+".\OBJ\gpio.obj",
+".\OBJ\lora.obj",
+".\OBJ\sensor.obj",
+".\OBJ\delay.obj",
+".\OBJ\synchron.obj",
+".\OBJ\numtools.obj" 
+TO ".\OBJ\lora" 
+PRINT(".\lora.m51") RAMSIZE(256) 

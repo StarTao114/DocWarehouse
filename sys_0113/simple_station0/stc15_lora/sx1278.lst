@@ -1,0 +1,380 @@
+C51 COMPILER V9.60.0.0   SX1278                                                            01/13/2024 20:02:50 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE SX1278
+OBJECT MODULE PLACED IN .\OBJ\sx1278.obj
+COMPILER INVOKED BY: D:\keil\KEIL_MDK\C51\BIN\C51.EXE APP\LoRa\sx1278.c LARGE ROM(COMPACT) OPTIMIZE(6,SIZE) BROWSE INCDI
+                    -R(.\APP\base;.\APP\LoRa;.\APP\uart;.\APP\MidWare) DEBUG OBJECTEXTEND PRINT(.\sx1278.lst) OBJECT(.\OBJ\sx1278.obj)
+
+line level    source
+
+   1          #include "sx1278.h"
+   2          #include "delay.h"
+   3          
+   4          //#include "reg51.hcd"
+   5          lpCtrlTypefunc_t lpTypefunc = { 0, 0, 0 };
+   6          unsigned char power_data[8] = { 0X80, 0X80, 0X80, 0X83, 0X86, 0x89, 0x8c, 0x8f };
+   7          
+   8          lpCtrlTypefunc_t ctrlTypefunc =
+   9                          { RF_SPI_MasterIO, RF_SPI_READ_BYTE, cmdSwitchEn,
+  10          
+  11                          };
+  12          
+  13          /**
+  14          * @brief        新版分频方案，以434MHz为基准，频间距5.04MHz，频宽100Hz
+  15          * @date         01/10/24
+  16          */
+  17          //unsigned char Frequency[3] = { 0x67, 0x74, 0xDE };    //413826088             单位：Hz
+  18          unsigned char Frequency[3] = { 0x68, 0xB7, 0xA6 };      //418869566 
+  19          //unsigned char Frequency[3] = { 0x69, 0xFA, 0x6F };    //423913044 
+  20          //unsigned char Frequency[3] = { 0x6B, 0x3D, 0x37 };    //428956522 
+  21          //unsigned char Frequency[3] = { 0x6C, 0x80, 0x00 };    //434000000 
+  22          //unsigned char Frequency[3] = { 0x6D, 0xC2, 0xC8 };    //439043478 
+  23          //unsigned char Frequency[3] = { 0x6F, 0x05, 0x90 };    //444086956 
+  24          //unsigned char Frequency[3] = { 0x70, 0x48, 0x59 };    //449130434 
+  25          //unsigned char Frequency[3] = { 0x71, 0x8B, 0x21 };    //454173912 
+  26          //unsigned char Frequency[3] = { 0x72, 0xCD, 0xE9 };    //459217390 
+  27          //unsigned char Frequency[3] = { 0x74, 0x10, 0xB2 };    //464260868 
+  28          //unsigned char Frequency[3] = { 0x75, 0x53, 0x7A };    //469304346 
+  29          //unsigned char Frequency[3] = { 0x76, 0x96, 0x42 };    //474347824 
+  30          //unsigned char Frequency[3] = { 0x77, 0xD9, 0x0B };    //479391302 
+  31          //unsigned char Frequency[3] = { 0x79, 0x1B, 0xD3 };    //484434780 
+  32          //unsigned char Frequency[3] = { 0x7A, 0x5E, 0x9B };    //489478258 
+  33          //unsigned char Frequency[3] = { 0x7B, 0xA1, 0x64 };    //494521736 
+  34          //unsigned char Frequency[3] = { 0x7C, 0xE4, 0x2C };    //499565214 
+  35          //unsigned char Frequency[3] = { 0x7E, 0x26, 0xF4 };    //504608692 
+  36          //unsigned char Frequency[3] = { 0x7F, 0x69, 0xBD };    //509652170 
+  37          //unsigned char Frequency[3] = { 0x80, 0xAC, 0x85 };    //514695648 
+  38          //unsigned char Frequency[3] = { 0x81, 0xEF, 0x4D };    //519739126 
+  39          //unsigned char Frequency[3] = { 0x83, 0x32, 0x16 };    //524782604 
+  40          
+  41          /**
+  42          * @brief        分频废案，以433MHz为基准，频间距5MHz，频宽60Hz
+  43          * @date         12/17/23
+  44          
+  45          //unsigned char Frequency[3] = { 0x6c, 0x90, 0x02 };//434.0Mhz，       通道0         缺省频率
+  46          //unsigned char Frequency[3] = { 0x6D, 0xCD, 0x6F };//439.0Mhz          通道1
+  47          //unsigned char Frequency[3] = { 0x6F, 0x0A, 0xDB };//443.9Mhz          通道2
+  48          //unsigned char Frequency[3] = { 0x70, 0x48, 0x48 };//448.9Mhz          通道3
+  49          //unsigned char Frequency[3] = { 0x71, 0x85, 0xB4 };//453.8Mhz          通道4
+  50          //unsigned char Frequency[3] = { 0x72, 0xC3, 0x21 };//458.8Mhz          通道5
+  51          //unsigned char Frequency[3] = { 0x74, 0x00, 0x8E };//463.7Mhz          通道6
+  52          //unsigned char Frequency[3] = { 0x75, 0x3D, 0xFA };//468.7Mhz          通道7
+  53          //unsigned char Frequency[3] = { 0x76, 0x7B, 0x67 };//473.7Mhz          通道8
+  54          //unsigned char Frequency[3] = { 0x77, 0xBB, 0xD3 };//478.6Mhz          通道9
+C51 COMPILER V9.60.0.0   SX1278                                                            01/13/2024 20:02:50 PAGE 2   
+
+  55          //unsigned char Frequency[3] = { 0x78, 0xF6, 0x40 };//483.6Mhz          通道10
+  56          //unsigned char Frequency[3] = { 0x7A, 0x33, 0xAD };//488.5Mhz          通道11
+  57          //unsigned char Frequency[3] = { 0x7B, 0x71, 0x19 };//493.5Mhz          通道12 
+  58          */
+  59          
+  60          
+  61          unsigned char powerValue = 7;
+  62          unsigned char SpreadingFactor = 12;    //扩频因子7-12
+  63          
+  64          
+  65          //unsigned char CodingRate = 2;        //1-4
+  66          unsigned char CodingRate = 1;        //1-4
+  67          
+  68          
+  69          unsigned char Bw_Frequency = 7;      //带宽6-9,7--125K
+  70          unsigned char RF_EX0_STATUS;
+  71          unsigned char CRC_Value;
+  72          unsigned char SX1278_RLEN;
+  73          //unsigned char recv[512];
+  74          
+  75          
+  76          //void Delay1s(unsigned int ii)
+  77          //{
+  78          //  int j;
+  79          //   while(ii--){
+  80          //     for(j=0;j<1000;j++);
+  81          //   }
+  82          //}
+  83          
+  84          /*
+  85          function:SX1278 restart
+  86          */
+  87          
+  88          void  SX1276Reset(void) {
+  89   1              RF_REST_L;
+  90   1      //      Delay1s(200);
+  91   1              Delay100ms();Delay100ms();
+  92   1              RF_REST_H;
+  93   1      //      Delay1s(500);
+  94   1              Delay100ms();Delay100ms();Delay100ms();
+  95   1      }
+  96          
+  97          
+  98          /*
+  99          function:control GPIO-EN
+ 100          */
+ 101          void  cmdSwitchEn(cmdEntype_t cmd) {
+ 102   1              switch (cmd) {
+ 103   2              case enOpen: {
+ 104   3                      RF_CE_L;
+ 105   3              }
+ 106   2                      break;
+ 107   2              case enClose: {
+ 108   3                      RF_CE_H;
+ 109   3              }
+ 110   2                      break;
+ 111   2              default:
+ 112   2                      break;
+ 113   2              }
+ 114   1      }
+ 115          
+ 116          
+C51 COMPILER V9.60.0.0   SX1278                                                            01/13/2024 20:02:50 PAGE 3   
+
+ 117          
+ 118          
+ 119          void  RF_SPI_MasterIO(unsigned char out) {
+ 120   1              unsigned char i;
+ 121   1              for (i = 0; i < 8; i++) {
+ 122   2                      if (out & 0x80) /* check if MSB is high */
+ 123   2                              RF_SDI_H;
+ 124   2                      else
+ 125   2                              RF_SDI_L; /* if not, set to low */
+ 126   2      
+ 127   2                      RF_CKL_H; /* toggle clock high */
+ 128   2                      out = (out << 1); /* shift 1 place for next bit */
+ 129   2                      RF_CKL_L; /* toggle clock low */
+ 130   2              }
+ 131   1      }
+ 132          
+ 133          unsigned char   RF_SPI_READ_BYTE() {
+ 134   1              unsigned char j;
+ 135   1              unsigned char i;
+ 136   1              j = 0;
+ 137   1              for (i = 0; i < 8; i++) {
+ 138   2                      RF_CKL_H;
+ 139   2                      j = (j << 1);                   // shift 1 place to the left or shift in 0 //
+ 140   2                      if ( SX1278_SDO)                                        // check to see if bit is high //
+ 141   2                              j = j | 0x01;                                      // if high, make bit high //
+ 142   2                                                                                                 // toggle clock high //
+ 143   2                      RF_CKL_L;                                                        // toggle clock low //
+ 144   2              }
+ 145   1      
+ 146   1              return j;                                                               // toggle clock low //
+ 147   1      }
+ 148          unsigned char  SX1276ReadBuffer(unsigned char addr) {
+ 149   1              unsigned char Value;
+ 150   1              lpTypefunc.lpSwitchEnStatus(enOpen); //NSS = 0;
+ 151   1              lpTypefunc.lpByteWritefunc(addr & 0x7f);
+ 152   1              Value = lpTypefunc.lpByteReadfunc();
+ 153   1              lpTypefunc.lpSwitchEnStatus(enClose); //NSS = 1;
+ 154   1      
+ 155   1              return Value;
+ 156   1      }
+ 157          
+ 158          /*
+ 159          function:set sx1278 work mode ,here you can control the mode which is send or recieve 
+ 160          parm: 
+ 161          */
+ 162          void  SX1276LoRaSetOpMode(RFMode_SET opMode) {
+ 163   1              unsigned char opModePrev;
+ 164   1              opModePrev = SX1276ReadBuffer(REG_LR_OPMODE);
+ 165   1              opModePrev &= 0xf8;
+ 166   1              opModePrev |= (unsigned char) opMode;
+ 167   1              SX1276WriteBuffer( REG_LR_OPMODE, opModePrev);
+ 168   1      }
+ 169          
+ 170          
+ 171          
+ 172          void  SX1276WriteBuffer(unsigned char addr,
+ 173                          unsigned char buffer) {
+ 174   1              lpTypefunc.lpSwitchEnStatus(enOpen); //NSS = 0;
+ 175   1              lpTypefunc.lpByteWritefunc(addr | 0x80);
+ 176   1              lpTypefunc.lpByteWritefunc(buffer);
+ 177   1              lpTypefunc.lpSwitchEnStatus(enClose); //NSS = 1;
+ 178   1      }
+C51 COMPILER V9.60.0.0   SX1278                                                            01/13/2024 20:02:50 PAGE 4   
+
+ 179          
+ 180          void  register_rf_func(lpCtrlTypefunc_t *func) {
+ 181   1              if (func->lpByteWritefunc != 0) {
+ 182   2                      lpTypefunc.lpByteWritefunc = func->lpByteWritefunc;
+ 183   2              }
+ 184   1              if (func->lpByteReadfunc != 0) {
+ 185   2                      lpTypefunc.lpByteReadfunc = func->lpByteReadfunc;
+ 186   2              }
+ 187   1              if (func->lpSwitchEnStatus != 0) {
+ 188   2                      lpTypefunc.lpSwitchEnStatus = func->lpSwitchEnStatus;
+ 189   2              }
+ 190   1      
+ 191   1      }
+ 192          
+ 193          void  SX1276LoRaSetRFFrequency(void) {
+ 194   1              SX1276WriteBuffer( REG_LR_FRFMSB, Frequency[0]);//0x04射频载波频率最高有效位
+ 195   1              SX1276WriteBuffer( REG_LR_FRFMID, Frequency[1]);//0x07射频载波频率中间有效位
+ 196   1              SX1276WriteBuffer( REG_LR_FRFLSB, Frequency[2]);//0x00射频载波频率最低有效位
+ 197   1      }
+ 198          
+ 199          void  SX1276LoRaSetNbTrigPeaks(unsigned char value) {
+ 200   1              unsigned char RECVER_DAT;
+ 201   1              RECVER_DAT = SX1276ReadBuffer(0x31);
+ 202   1              RECVER_DAT = (RECVER_DAT & 0xF8) | value;
+ 203   1              SX1276WriteBuffer(0x31, RECVER_DAT);
+ 204   1      }
+ 205          
+ 206          void  SX1276LoRaSetSpreadingFactor(unsigned char factor) {
+ 207   1              unsigned char RECVER_DAT;
+ 208   1              SX1276LoRaSetNbTrigPeaks(3);
+ 209   1              RECVER_DAT = SX1276ReadBuffer( REG_LR_MODEMCONFIG2);
+ 210   1              RECVER_DAT = (RECVER_DAT & RFLR_MODEMCONFIG2_SF_MASK) | (factor << 4);
+ 211   1              SX1276WriteBuffer( REG_LR_MODEMCONFIG2, RECVER_DAT);
+ 212   1      }
+ 213          
+ 214          void  SX1276LoRaSetErrorCoding(unsigned char value) {
+ 215   1              unsigned char RECVER_DAT;
+ 216   1              RECVER_DAT = SX1276ReadBuffer( REG_LR_MODEMCONFIG1);
+ 217   1              RECVER_DAT = (RECVER_DAT & RFLR_MODEMCONFIG1_CODINGRATE_MASK)
+ 218   1                              | (value << 1);
+ 219   1              SX1276WriteBuffer( REG_LR_MODEMCONFIG1, RECVER_DAT);
+ 220   1      // LoRaSettings.ErrorCoding = value;
+ 221   1      }
+ 222          
+ 223          void  SX1276LoRaSetSignalBandwidth(unsigned char bw) {
+ 224   1              unsigned char RECVER_DAT;
+ 225   1              RECVER_DAT = SX1276ReadBuffer( REG_LR_MODEMCONFIG1);
+ 226   1              RECVER_DAT = (RECVER_DAT & RFLR_MODEMCONFIG1_BW_MASK) | (bw << 4);
+ 227   1              SX1276WriteBuffer( REG_LR_MODEMCONFIG1, RECVER_DAT);
+ 228   1      // LoRaSettings.SignalBw = bw;
+ 229   1      }
+ 230          
+ 231          void  SX1276LoRaSetImplicitHeaderOn(BOOL enable) {
+ 232   1              unsigned char RECVER_DAT;
+ 233   1              RECVER_DAT = SX1276ReadBuffer( REG_LR_MODEMCONFIG1);
+ 234   1              RECVER_DAT = (RECVER_DAT & RFLR_MODEMCONFIG1_IMPLICITHEADER_MASK)
+ 235   1                              | (enable);
+ 236   1              SX1276WriteBuffer( REG_LR_MODEMCONFIG1, RECVER_DAT);
+ 237   1      }
+ 238          
+ 239          void  SX1276LoRaSetPayloadLength(unsigned char value) {
+ 240   1              SX1276WriteBuffer( REG_LR_PAYLOADLENGTH, value);
+C51 COMPILER V9.60.0.0   SX1278                                                            01/13/2024 20:02:50 PAGE 5   
+
+ 241   1      }
+ 242          
+ 243          void  SX1276LoRaSetSymbTimeout(unsigned int value) {
+ 244   1              unsigned char RECVER_DAT[2];
+ 245   1              RECVER_DAT[0] = SX1276ReadBuffer( REG_LR_MODEMCONFIG2);
+ 246   1              RECVER_DAT[1] = SX1276ReadBuffer( REG_LR_SYMBTIMEOUTLSB);
+ 247   1              RECVER_DAT[0] = (RECVER_DAT[0] & RFLR_MODEMCONFIG2_SYMBTIMEOUTMSB_MASK)
+ 248   1                              | ((value >> 8) & ~RFLR_MODEMCONFIG2_SYMBTIMEOUTMSB_MASK);
+ 249   1              RECVER_DAT[1] = value & 0xFF;
+ 250   1              SX1276WriteBuffer( REG_LR_MODEMCONFIG2, RECVER_DAT[0]);
+ 251   1              SX1276WriteBuffer( REG_LR_SYMBTIMEOUTLSB, RECVER_DAT[1]);
+ 252   1      }
+ 253          
+ 254          void  SX1276LoRaSetMobileNode(BOOL enable) {
+ 255   1              unsigned char RECVER_DAT;
+ 256   1              RECVER_DAT = SX1276ReadBuffer( REG_LR_MODEMCONFIG3);
+ 257   1              RECVER_DAT = (RECVER_DAT & RFLR_MODEMCONFIG3_MOBILE_NODE_MASK)
+ 258   1                              | (enable << 3);
+ 259   1              SX1276WriteBuffer( REG_LR_MODEMCONFIG3, RECVER_DAT);
+ 260   1      }
+ 261          
+ 262          void  RF_RECEIVE(void) {
+ 263   1              SX1276LoRaSetOpMode(Stdby_mode);
+ 264   1              SX1276WriteBuffer(REG_LR_IRQFLAGSMASK, IRQN_RXD_Value);  //打开接收中断
+ 265   1              SX1276WriteBuffer(REG_LR_HOPPERIOD, PACKET_MIAX_Value);
+ 266   1              SX1276WriteBuffer( REG_LR_DIOMAPPING1, 0X00);
+ 267   1              SX1276WriteBuffer( REG_LR_DIOMAPPING2, 0X00);
+ 268   1              SX1276LoRaSetOpMode(Receiver_mode);
+ 269   1      //   lpTypefunc.paSwitchCmdfunc(rxOpen);
+ 270   1      }
+ 271          
+ 272          void  SX1276LoRaSetPacketCrcOn(BOOL enable) {
+ 273   1              unsigned char RECVER_DAT;
+ 274   1              RECVER_DAT = SX1276ReadBuffer( REG_LR_MODEMCONFIG2);
+ 275   1              RECVER_DAT = (RECVER_DAT & RFLR_MODEMCONFIG2_RXPAYLOADCRC_MASK)
+ 276   1                              | (enable << 2);
+ 277   1              SX1276WriteBuffer( REG_LR_MODEMCONFIG2, RECVER_DAT);
+ 278   1      }
+ 279          
+ 280          void  SX1276LoRaFsk(Debugging_fsk_ook opMode) {
+ 281   1              unsigned char opModePrev;
+ 282   1              opModePrev = SX1276ReadBuffer(REG_LR_OPMODE);
+ 283   1              opModePrev &= 0x7F;
+ 284   1              opModePrev |= (unsigned char) opMode;
+ 285   1              SX1276WriteBuffer( REG_LR_OPMODE, opModePrev);
+ 286   1      }
+ 287          
+ 288          
+ 289          void  SX1276LoRaSetRFPower(unsigned char power) {
+ 290   1              SX1276WriteBuffer( REG_LR_PADAC, 0x87);
+ 291   1              SX1276WriteBuffer( REG_LR_PACONFIG, power_data[power]);
+ 292   1      }
+ 293          
+ 294          
+ 295          /*
+ 296          function :you must call it ,the function is to init the module.
+ 297          */
+ 298          void  SX1276LORA_INT(void) {
+ 299   1              SX1276LoRaSetOpMode(Sleep_mode);  //设置睡眠模式0x01
+ 300   1              SX1276LoRaFsk(LORA_mode);             // 设置扩频模式,只能在睡眠模式下修改
+ 301   1              SX1276LoRaSetOpMode(Stdby_mode);   // 设置为普通模式
+ 302   1              SX1276WriteBuffer( REG_LR_DIOMAPPING1, GPIO_VARE_1);
+C51 COMPILER V9.60.0.0   SX1278                                                            01/13/2024 20:02:50 PAGE 6   
+
+ 303   1              SX1276WriteBuffer( REG_LR_DIOMAPPING1, GPIO_VARE_1);
+ 304   1              SX1276WriteBuffer( REG_LR_DIOMAPPING2, GPIO_VARE_2);
+ 305   1              SX1276LoRaSetRFFrequency();
+ 306   1              SX1276LoRaSetRFPower(powerValue);
+ 307   1              SX1276LoRaSetSpreadingFactor(SpreadingFactor);   // 扩频因子设置
+ 308   1              SX1276LoRaSetErrorCoding(CodingRate);            //有效数据比
+ 309   1              SX1276LoRaSetPacketCrcOn(true);                   //CRC 校验打开
+ 310   1              SX1276LoRaSetSignalBandwidth(Bw_Frequency);      //设置扩频带宽
+ 311   1              SX1276LoRaSetImplicitHeaderOn(false);           //同步头是显性模式
+ 312   1              SX1276LoRaSetPayloadLength(0xff);//0x22 timeout中断
+ 313   1              SX1276LoRaSetSymbTimeout(0x3FF);
+ 314   1              SX1276LoRaSetMobileNode(true);                   // 低数据的优化
+ 315   1              RF_RECEIVE();
+ 316   1              uartSend("\r\ninit finish\r\n", 16);
+ 317   1      
+ 318   1      }
+ 319          
+ 320          /*
+ 321          function :if you want to send data,you can call it 
+ 322          RF_TRAN_P:data
+ 323          ASM_i:the length of the data
+ 324          */
+ 325          void  FUN_RF_SENDPACKET(unsigned char *RF_TRAN_P,
+ 326                          unsigned char LEN) {
+ 327   1              unsigned char ASM_i;
+ 328   1      //   lpTypefunc.paSwitchCmdfunc(txOpen);
+ 329   1              SX1276LoRaSetOpMode(Stdby_mode);
+ 330   1              SX1276WriteBuffer( REG_LR_HOPPERIOD, 0);        //不做频率跳变
+ 331   1              SX1276WriteBuffer(REG_LR_IRQFLAGSMASK, IRQN_TXD_Value); //打开发送中断
+ 332   1              SX1276WriteBuffer( REG_LR_PAYLOADLENGTH, LEN);   //最大数据包
+ 333   1              SX1276WriteBuffer( REG_LR_FIFOTXBASEADDR, 0);
+ 334   1              SX1276WriteBuffer( REG_LR_FIFOADDRPTR, 0);
+ 335   1              lpTypefunc.lpSwitchEnStatus(enOpen);
+ 336   1              lpTypefunc.lpByteWritefunc(0x80);
+ 337   1              for (ASM_i = 0; ASM_i < LEN; ASM_i++) {
+ 338   2                      lpTypefunc.lpByteWritefunc(*RF_TRAN_P);
+ 339   2                      RF_TRAN_P++;
+ 340   2              }
+ 341   1              lpTypefunc.lpSwitchEnStatus(enClose);
+ 342   1              SX1276WriteBuffer(REG_LR_DIOMAPPING1, 0x40);
+ 343   1              SX1276WriteBuffer(REG_LR_DIOMAPPING2, 0x00);
+ 344   1              SX1276LoRaSetOpMode(Transmitter_mode);
+ 345   1      }
+ 346          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   1060    ----
+   CONSTANT SIZE    =     16    ----
+   XDATA SIZE       =     36      26
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

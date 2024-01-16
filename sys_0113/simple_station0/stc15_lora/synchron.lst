@@ -1,0 +1,61 @@
+C51 COMPILER V9.60.0.0   SYNCHRON                                                          01/13/2024 20:02:51 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE SYNCHRON
+OBJECT MODULE PLACED IN .\OBJ\synchron.obj
+COMPILER INVOKED BY: D:\keil\KEIL_MDK\C51\BIN\C51.EXE APP\MidWare\synchron.c LARGE ROM(COMPACT) OPTIMIZE(6,SIZE) BROWSE 
+                    -INCDIR(.\APP\base;.\APP\LoRa;.\APP\uart;.\APP\MidWare) DEBUG OBJECTEXTEND PRINT(.\synchron.lst) OBJECT(.\OBJ\synchron.ob
+                    -j)
+
+line level    source
+
+   1          #include "synchron.h"
+   2          #include "gpio.h"
+   3          
+   4          //下面的变量会被反复擦写，尤其是中断，我希望它每次擦写都能立刻在全局生效
+   5          volatile word2byte synPeriod; 
+   6          u16 lastPeriod = 0; 
+   7          u8 currentNode = 0;//当前通信的目标节点编号
+   8          u8 synReady = 0;
+   9          
+  10          
+  11          #ifdef specialStation
+              //暂时用按键代替就绪信号
+              u8 getReadySign(void)
+              {
+                      if(KEY0 == 0)
+                      {
+                              synReady = 1;
+                      }
+                      return 0;
+              }
+              
+              void advancePeriod(void)
+              {
+                      if(synReady == 1)
+                      {
+                              synPeriod+=10;//方便测试
+                              synReady = 0;
+                      }
+              }
+              
+              void signCreate(void)
+              {
+                      
+              }
+              
+              #endif
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   ----    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =      6    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
