@@ -1,0 +1,1055 @@
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                    01/15/2024  16:44:12  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22.2.0, INVOKED BY:
+D:\KEIL\KEIL_MDK\C51\BIN\BL51.EXE .\OBJ\MAIN.obj, .\OBJ\sx1278.obj, .\OBJ\uart.obj, .\OBJ\gpio.obj, .\OBJ\lora.obj, .\OB
+>> J\delay.obj, .\OBJ\synchron.obj, .\OBJ\numtools.obj TO .\OBJ\lora PRINT (.\lora.m51) RAMSIZE (256)
+
+
+MEMORY MODEL: LARGE
+
+
+INPUT MODULES INCLUDED:
+  .\OBJ\MAIN.obj (MAIN)
+  .\OBJ\sx1278.obj (SX1278)
+  .\OBJ\uart.obj (UART)
+  .\OBJ\gpio.obj (GPIO)
+  .\OBJ\lora.obj (LORA)
+  .\OBJ\delay.obj (DELAY)
+  .\OBJ\synchron.obj (SYNCHRON)
+  .\OBJ\numtools.obj (NUMTOOLS)
+  D:\KEIL\KEIL_MDK\C51\LIB\C51L.LIB (?C_STARTUP)
+  D:\KEIL\KEIL_MDK\C51\LIB\C51L.LIB (?C?COPY)
+  D:\KEIL\KEIL_MDK\C51\LIB\C51L.LIB (?C?CLDPTR)
+  D:\KEIL\KEIL_MDK\C51\LIB\C51L.LIB (?C?IILDX)
+  D:\KEIL\KEIL_MDK\C51\LIB\C51L.LIB (?C?ILDIX)
+  D:\KEIL\KEIL_MDK\C51\LIB\C51L.LIB (?C?PLDPTR)
+  D:\KEIL\KEIL_MDK\C51\LIB\C51L.LIB (?C?PLDOPTR)
+  D:\KEIL\KEIL_MDK\C51\LIB\C51L.LIB (?C?CCASE)
+  D:\KEIL\KEIL_MDK\C51\LIB\C51L.LIB (?C?ICALL)
+  D:\KEIL\KEIL_MDK\C51\LIB\C51L.LIB (?C_INIT)
+  D:\KEIL\KEIL_MDK\C51\LIB\C51L.LIB (?C?PLDIDATA)
+  D:\KEIL\KEIL_MDK\C51\LIB\C51L.LIB (?C?PLDXDATA)
+  D:\KEIL\KEIL_MDK\C51\LIB\C51L.LIB (?C?PLDPDATA)
+  D:\KEIL\KEIL_MDK\C51\LIB\C51L.LIB (?C?PLDCODE)
+
+
+LINK MAP OF MODULE:  .\OBJ\lora (MAIN)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            REG     0008H     0008H     ABSOLUTE     "REG BANK 1"
+            DATA    0010H     0006H     UNIT         ?DT?DELAY
+                    0016H     000AH                  *** GAP ***
+            BIT     0020H.0   0000H.2   UNIT         ?BI?UART
+                    0020H.2   0000H.6                *** GAP ***
+            IDATA   0021H     0001H     UNIT         ?STACK
+
+            * * * * * * *  X D A T A   M E M O R Y  * * * * * * *
+            XDATA   0000H     0025H     UNIT         ?XD?MAIN
+            XDATA   0025H     0024H     UNIT         ?XD?SX1278
+            XDATA   0049H     001EH     UNIT         ?XD?UART
+            XDATA   0067H     0016H     UNIT         ?XD?LORA
+            XDATA   007DH     0006H     UNIT         ?XD?SYNCHRON
+            XDATA   0083H     0005H     UNIT         ?XD?_FUN_RF_SENDPACKET?SX1278
+            XDATA   0088H     0004H     UNIT         ?XD?_DELAY1S?SX1278
+            XDATA   008CH     0004H     UNIT         ?XD?_SX1276LORASETSYMBTIMEOUT?SX1278
+            XDATA   0090H     0004H     UNIT         ?XD?_UARTSEND?UART
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  01/15/2024  16:44:12  PAGE 2
+
+
+            XDATA   0094H     0004H     UNIT         ?XD?_LORATX?LORA
+            XDATA   0098H     0003H     UNIT         ?XD?_REGISTER_RF_FUNC?SX1278
+            XDATA   009BH     0002H     UNIT         ?XD?_RF_SPI_MASTERIO?SX1278
+            XDATA   009DH     0002H     UNIT         ?XD?RF_SPI_READ_BYTE?SX1278
+            XDATA   009FH     0002H     UNIT         ?XD?_SX1276READBUFFER?SX1278
+            XDATA   00A1H     0002H     UNIT         ?XD?_SX1276LORASETOPMODE?SX1278
+            XDATA   00A3H     0002H     UNIT         ?XD?_SX1276WRITEBUFFER?SX1278
+            XDATA   00A5H     0002H     UNIT         ?XD?_SX1276LORASETNBTRIGPEAKS?SX1278
+            XDATA   00A7H     0002H     UNIT         ?XD?_SX1276LORASETSPREADINGFACTOR?SX1278
+            XDATA   00A9H     0002H     UNIT         ?XD?_SX1276LORASETERRORCODING?SX1278
+            XDATA   00ABH     0002H     UNIT         ?XD?_SX1276LORASETSIGNALBANDWIDTH?SX1278
+            XDATA   00ADH     0002H     UNIT         ?XD?_SX1276LORASETIMPLICITHEADERON?SX1278
+            XDATA   00AFH     0002H     UNIT         ?XD?_SX1276LORASETMOBILENODE?SX1278
+            XDATA   00B1H     0002H     UNIT         ?XD?_SX1276LORASETPACKETCRCON?SX1278
+            XDATA   00B3H     0002H     UNIT         ?XD?_SX1276LORAFSK?SX1278
+            XDATA   00B5H     0002H     UNIT         ?XD?_UART_SENDDATA?UART
+            XDATA   00B7H     0002H     UNIT         ?XD?LORACOMMUNICATESTART?LORA
+            XDATA   00B9H     0002H     UNIT         ?XD?LORANODESLEEP?LORA
+            XDATA   00BBH     0001H     UNIT         ?XD?_CMDSWITCHEN?SX1278
+            XDATA   00BCH     0001H     UNIT         ?XD?_SX1276LORASETPAYLOADLENGTH?SX1278
+            XDATA   00BDH     0001H     UNIT         ?XD?_SX1276LORASETRFPOWER?SX1278
+            XDATA   00BEH     0001H     UNIT         ?XD?UART1_IRQ?UART
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     001FH     INBLOCK      ?PR?SX1276LORASETRFFREQUENCY?SX1278
+                    0022H     0001H                  *** GAP ***
+            CODE    0023H     0003H     ABSOLUTE     
+            CODE    0026H     01DEH     UNIT         ?C?LIB_CODE
+            CODE    0204H     00EBH     INBLOCK      ?PR?UART1_IRQ?UART
+            CODE    02EFH     00D2H     INBLOCK      ?PR?_FUN_RF_SENDPACKET?SX1278
+            CODE    03C1H     00B1H     INBLOCK      ?PR?_REGISTER_RF_FUNC?SX1278
+            CODE    0472H     00AFH     UNIT         ?C_INITSEG
+            CODE    0521H     008CH     UNIT         ?C_C51STARTUP
+            CODE    05ADH     006BH     INBLOCK      ?PR?MAIN?MAIN
+            CODE    0618H     0066H     INBLOCK      ?PR?SX1276LORA_INT?SX1278
+            CODE    067EH     0065H     INBLOCK      ?PR?_SX1276WRITEBUFFER?SX1278
+            CODE    06E3H     0063H     INBLOCK      ?PR?_SX1276LORASETSYMBTIMEOUT?SX1278
+            CODE    0746H     0061H     INBLOCK      ?PR?_SX1276READBUFFER?SX1278
+            CODE    07A7H     004DH     INBLOCK      ?PR?RF_SPI_READ_BYTE?SX1278
+            CODE    07F4H     0009H     INBLOCK      ?PR?GETREADYSIGN?SYNCHRON
+                    07FDH     0003H                  *** GAP ***
+            CODE    0800H     004AH     INBLOCK      ?PR?LORACOMMUNICATESTART?LORA
+            CODE    084AH     004AH     INBLOCK      ?PR?LORANODESLEEP?LORA
+            CODE    0894H     0048H     INBLOCK      ?PR?_DELAY1S?SX1278
+            CODE    08DCH     0046H     INBLOCK      ?PR?_RF_SPI_MASTERIO?SX1278
+            CODE    0922H     003EH     INBLOCK      ?PR?_UARTSEND?UART
+            CODE    0960H     003AH     INBLOCK      ?PR?_SX1276LORASETOPMODE?SX1278
+            CODE    099AH     003AH     INBLOCK      ?PR?_SX1276LORASETSPREADINGFACTOR?SX1278
+            CODE    09D4H     003AH     INBLOCK      ?PR?_SX1276LORAFSK?SX1278
+            CODE    0A0EH     0037H     INBLOCK      ?PR?_SX1276LORASETMOBILENODE?SX1278
+            CODE    0A45H     0036H     INBLOCK      ?PR?_SX1276LORASETPACKETCRCON?SX1278
+            CODE    0A7BH     0035H     INBLOCK      ?PR?_SX1276LORASETSIGNALBANDWIDTH?SX1278
+            CODE    0AB0H     0034H     INBLOCK      ?PR?_SX1276LORASETERRORCODING?SX1278
+            CODE    0AE4H     0032H     INBLOCK      ?PR?_LORATX?LORA
+            CODE    0B16H     0030H     INBLOCK      ?PR?_SX1276LORASETNBTRIGPEAKS?SX1278
+            CODE    0B46H     0030H     INBLOCK      ?PR?_SX1276LORASETIMPLICITHEADERON?SX1278
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  01/15/2024  16:44:12  PAGE 3
+
+
+            CODE    0B76H     0027H     INBLOCK      ?PR?RF_RECEIVE?SX1278
+            CODE    0B9DH     0023H     INBLOCK      ?PR?_SX1276LORASETRFPOWER?SX1278
+            CODE    0BC0H     0021H     INBLOCK      ?PR?DELAY100MS?DELAY
+            CODE    0BE1H     001EH     INBLOCK      ?PR?_CMDSWITCHEN?SX1278
+            CODE    0BFFH     001EH     INBLOCK      ?PR?_UART_SENDDATA?UART
+            CODE    0C1DH     001CH     INBLOCK      ?PR?UARTINIT?UART
+            CODE    0C39H     0015H     INBLOCK      ?PR?DELAY5MS?DELAY
+            CODE    0C4EH     0013H     INBLOCK      ?PR?SX1276RESET?SX1278
+            CODE    0C61H     0011H     INBLOCK      ?PR?HARDWAREINIT?GPIO
+            CODE    0C72H     0010H     INBLOCK      ?PR?_SX1276LORASETPAYLOADLENGTH?SX1278
+            CODE    0C82H     0010H     INBLOCK      ?PR?LORAINIT?LORA
+            CODE    0C92H     000EH     INBLOCK      ?PR?DELAY10US?DELAY
+            CODE    0CA0H     0004H     UNIT         ?CO?LORA
+
+
+
+OVERLAY MAP OF MODULE:   .\OBJ\lora (MAIN)
+
+
+SEGMENT
+  +--> CALLED SEGMENT
+---------------------
+?C_C51STARTUP
+  +--> ?PR?MAIN?MAIN
+  +--> ?C_INITSEG
+
+?PR?MAIN?MAIN
+  +--> ?PR?UARTINIT?UART
+  +--> ?PR?DELAY5MS?DELAY
+  +--> ?PR?_UARTSEND?UART
+  +--> ?PR?DELAY10US?DELAY
+
+?PR?_UARTSEND?UART
+  +--> ?PR?_UART_SENDDATA?UART
+
+?C_INITSEG
+  +--> ?PR?_RF_SPI_MASTERIO?SX1278
+  +--> ?PR?RF_SPI_READ_BYTE?SX1278
+  +--> ?PR?_CMDSWITCHEN?SX1278
+
+
+
+SYMBOL TABLE OF MODULE:  .\OBJ\lora (MAIN)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        MAIN
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0080H         PUBLIC        P0
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+  D:00C0H         PUBLIC        P4
+  D:00C8H         PUBLIC        P5
+  D:00E8H         PUBLIC        P6
+  D:00F8H         PUBLIC        P7
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  01/15/2024  16:44:12  PAGE 4
+
+
+  D:00A8H         PUBLIC        IE
+  D:00B8H         PUBLIC        IP
+  D:00D8H         PUBLIC        CCON
+  C:05ADH         PUBLIC        main
+  B:00B0H.0       PUBLIC        P30
+  D:0098H         PUBLIC        SCON
+  B:00B0H.1       PUBLIC        P31
+  D:0088H         PUBLIC        TCON
+  B:00B0H.2       PUBLIC        P32
+  B:00B0H.3       PUBLIC        P33
+  B:00B0H.5       PUBLIC        P35
+  X:0000H         PUBLIC        tem
+  X:0002H         PUBLIC        wet
+  X:0004H         PUBLIC        swi
+  X:0006H         PUBLIC        pwr
+  X:0008H         PUBLIC        te_buff
+  X:0010H         PUBLIC        uartScheduler
+  X:0011H         PUBLIC        contextBuffer
+  X:0019H         PUBLIC        tx_buff
+  D:00A2H         PUBLIC        AUXR1
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          MAIN
+  C:05ADH         LINE#         24
+  C:05ADH         LINE#         25
+  C:05ADH         LINE#         26
+  C:05B5H         LINE#         28
+  C:05B8H         LINE#         29
+  C:05BCH         LINE#         31
+  C:05BCH         LINE#         32
+  C:05BCH         LINE#         33
+  C:05BEH         LINE#         35
+  C:05C1H         LINE#         36
+  C:05C1H         LINE#         37
+  C:05C4H         LINE#         38
+  C:05C7H         LINE#         39
+  C:05D2H         LINE#         40
+  C:05D5H         LINE#         41
+  C:05D8H         LINE#         42
+  C:05D8H         LINE#         52
+  C:05E4H         LINE#         53
+  C:05E4H         LINE#         54
+  C:05F9H         LINE#         55
+  C:0601H         LINE#         56
+  C:0601H         LINE#         58
+  C:060DH         LINE#         59
+  C:060DH         LINE#         60
+  C:060FH         LINE#         61
+  C:0611H         LINE#         63
+  C:0611H         LINE#         64
+  C:0613H         LINE#         65
+  C:0613H         LINE#         67
+  C:0615H         LINE#         86
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        MAIN
+
+  -------         MODULE        SX1278
+  C:0000H         SYMBOL        _ICE_DUMMY_
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  01/15/2024  16:44:12  PAGE 5
+
+
+  C:0B76H         PUBLIC        RF_RECEIVE
+  D:0080H         PUBLIC        P0
+  D:0090H         PUBLIC        P1
+  C:0A0EH         PUBLIC        _SX1276LoRaSetMobileNode
+  D:00A0H         PUBLIC        P2
+  C:0AB0H         PUBLIC        _SX1276LoRaSetErrorCoding
+  D:00B0H         PUBLIC        P3
+  C:0C4EH         PUBLIC        SX1276Reset
+  D:00C0H         PUBLIC        P4
+  D:00C8H         PUBLIC        P5
+  D:00E8H         PUBLIC        P6
+  X:0025H         PUBLIC        SpreadingFactor
+  D:00F8H         PUBLIC        P7
+  X:0026H         PUBLIC        ctrlTypefunc
+  X:002FH         PUBLIC        RF_EX0_STATUS
+  D:00A8H         PUBLIC        IE
+  X:0030H         PUBLIC        SX1278_RLEN
+  C:09D4H         PUBLIC        _SX1276LoRaFsk
+  C:0894H         PUBLIC        _Delay1s
+  D:00B8H         PUBLIC        IP
+  C:0A7BH         PUBLIC        _SX1276LoRaSetSignalBandwidth
+  C:099AH         PUBLIC        _SX1276LoRaSetSpreadingFactor
+  D:00D8H         PUBLIC        CCON
+  C:06E3H         PUBLIC        _SX1276LoRaSetSymbTimeout
+  C:02EFH         PUBLIC        _FUN_RF_SENDPACKET
+  X:0031H         PUBLIC        power_data
+  X:0039H         PUBLIC        powerValue
+  X:003AH         PUBLIC        lpTypefunc
+  B:0090H.0       PUBLIC        P10
+  C:03C1H         PUBLIC        _register_rf_func
+  B:0090H.2       PUBLIC        P12
+  D:0098H         PUBLIC        SCON
+  B:0090H.3       PUBLIC        P13
+  D:0088H         PUBLIC        TCON
+  B:0090H.4       PUBLIC        P14
+  B:0090H.5       PUBLIC        P15
+  X:0043H         PUBLIC        Frequency
+  X:0046H         PUBLIC        CRC_Value
+  C:0B9DH         PUBLIC        _SX1276LoRaSetRFPower
+  C:08DCH         PUBLIC        _RF_SPI_MasterIO
+  C:0A45H         PUBLIC        _SX1276LoRaSetPacketCrcOn
+  X:0047H         PUBLIC        Bw_Frequency
+  C:0C72H         PUBLIC        _SX1276LoRaSetPayloadLength
+  C:0746H         PUBLIC        _SX1276ReadBuffer
+  C:0B16H         PUBLIC        _SX1276LoRaSetNbTrigPeaks
+  C:0BE1H         PUBLIC        _cmdSwitchEn
+  C:0960H         PUBLIC        _SX1276LoRaSetOpMode
+  X:0048H         PUBLIC        CodingRate
+  C:0B46H         PUBLIC        _SX1276LoRaSetImplicitHeaderOn
+  C:067EH         PUBLIC        _SX1276WriteBuffer
+  C:0003H         PUBLIC        SX1276LoRaSetRFFrequency
+  C:07A7H         PUBLIC        RF_SPI_READ_BYTE
+  C:0618H         PUBLIC        SX1276LORA_INT
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          _DELAY1S
+  X:0088H         SYMBOL        ii
+  -------         DO            
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  01/15/2024  16:44:12  PAGE 6
+
+
+  X:008AH         SYMBOL        j
+  -------         ENDDO         
+  C:0894H         LINE#         73
+  C:089CH         LINE#         74
+  C:089CH         LINE#         76
+  C:08AEH         LINE#         77
+  C:08D9H         LINE#         78
+  C:08DBH         LINE#         79
+  -------         ENDPROC       _DELAY1S
+  -------         PROC          SX1276RESET
+  C:0C4EH         LINE#         85
+  C:0C4EH         LINE#         86
+  C:0C50H         LINE#         87
+  C:0C57H         LINE#         88
+  C:0C59H         LINE#         89
+  C:0C60H         LINE#         90
+  -------         ENDPROC       SX1276RESET
+  -------         PROC          _CMDSWITCHEN
+  X:00BBH         SYMBOL        cmd
+  C:0BE1H         LINE#         96
+  C:0BE6H         LINE#         97
+  C:0BF9H         LINE#         98
+  C:0BF9H         LINE#         99
+  C:0BFBH         LINE#         100
+  C:0BFBH         LINE#         101
+  C:0BFCH         LINE#         102
+  C:0BFCH         LINE#         103
+  C:0BFEH         LINE#         104
+  C:0BFEH         LINE#         105
+  C:0BFEH         LINE#         106
+  C:0BFEH         LINE#         107
+  C:0BFEH         LINE#         108
+  C:0BFEH         LINE#         109
+  -------         ENDPROC       _CMDSWITCHEN
+  -------         PROC          _RF_SPI_MASTERIO
+  X:009BH         SYMBOL        out
+  -------         DO            
+  X:009CH         SYMBOL        i
+  -------         ENDDO         
+  C:08DCH         LINE#         114
+  C:08E1H         LINE#         116
+  C:08F8H         LINE#         117
+  C:0901H         LINE#         118
+  C:0905H         LINE#         120
+  C:0907H         LINE#         122
+  C:0909H         LINE#         123
+  C:0917H         LINE#         124
+  C:0919H         LINE#         125
+  C:0921H         LINE#         126
+  -------         ENDPROC       _RF_SPI_MASTERIO
+  -------         PROC          RF_SPI_READ_BYTE
+  -------         DO            
+  X:009DH         SYMBOL        j
+  X:009EH         SYMBOL        i
+  -------         ENDDO         
+  C:07A7H         LINE#         128
+  C:07A7H         LINE#         131
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  01/15/2024  16:44:12  PAGE 7
+
+
+  C:07ACH         LINE#         132
+  C:07C3H         LINE#         133
+  C:07C5H         LINE#         134
+  C:07D3H         LINE#         135
+  C:07D6H         LINE#         136
+  C:07E4H         LINE#         138
+  C:07E6H         LINE#         139
+  C:07EEH         LINE#         141
+  C:07F3H         LINE#         142
+  -------         ENDPROC       RF_SPI_READ_BYTE
+  -------         PROC          _SX1276READBUFFER
+  X:009FH         SYMBOL        addr
+  -------         DO            
+  X:00A0H         SYMBOL        Value
+  -------         ENDDO         
+  C:0746H         LINE#         143
+  C:074BH         LINE#         145
+  C:075FH         LINE#         146
+  C:077AH         LINE#         147
+  C:078DH         LINE#         148
+  C:07A1H         LINE#         150
+  C:07A6H         LINE#         151
+  -------         ENDPROC       _SX1276READBUFFER
+  -------         PROC          _SX1276LORASETOPMODE
+  X:00A1H         SYMBOL        opMode
+  -------         DO            
+  X:00A2H         SYMBOL        opModePrev
+  -------         ENDDO         
+  C:0960H         LINE#         157
+  C:0965H         LINE#         159
+  C:096FH         LINE#         160
+  C:097DH         LINE#         161
+  C:098FH         LINE#         162
+  C:0999H         LINE#         163
+  -------         ENDPROC       _SX1276LORASETOPMODE
+  -------         PROC          _SX1276WRITEBUFFER
+  X:00A3H         SYMBOL        addr
+  X:00A4H         SYMBOL        buffer
+  C:067EH         LINE#         167
+  C:0688H         LINE#         168
+  C:0688H         LINE#         169
+  C:069CH         LINE#         170
+  C:06B7H         LINE#         171
+  C:06CEH         LINE#         172
+  C:06E2H         LINE#         173
+  -------         ENDPROC       _SX1276WRITEBUFFER
+  -------         PROC          _REGISTER_RF_FUNC
+  X:0098H         SYMBOL        func
+  C:03C1H         LINE#         175
+  C:03CCH         LINE#         176
+  C:03E2H         LINE#         177
+  C:03FBH         LINE#         178
+  C:03FBH         LINE#         179
+  C:0417H         LINE#         180
+  C:0436H         LINE#         181
+  C:0436H         LINE#         182
+  C:0452H         LINE#         183
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  01/15/2024  16:44:12  PAGE 8
+
+
+  C:0471H         LINE#         184
+  C:0471H         LINE#         186
+  -------         ENDPROC       _REGISTER_RF_FUNC
+  -------         PROC          SX1276LORASETRFFREQUENCY
+  C:0003H         LINE#         188
+  C:0003H         LINE#         189
+  C:000DH         LINE#         190
+  C:0017H         LINE#         191
+  C:0021H         LINE#         192
+  -------         ENDPROC       SX1276LORASETRFFREQUENCY
+  -------         PROC          _SX1276LORASETNBTRIGPEAKS
+  X:00A5H         SYMBOL        value
+  -------         DO            
+  X:00A6H         SYMBOL        RECVER_DAT
+  -------         ENDDO         
+  C:0B16H         LINE#         194
+  C:0B1BH         LINE#         196
+  C:0B25H         LINE#         197
+  C:0B3BH         LINE#         198
+  C:0B45H         LINE#         199
+  -------         ENDPROC       _SX1276LORASETNBTRIGPEAKS
+  -------         PROC          _SX1276LORASETSPREADINGFACTOR
+  X:00A7H         SYMBOL        factor
+  -------         DO            
+  X:00A8H         SYMBOL        RECVER_DAT
+  -------         ENDDO         
+  C:099AH         LINE#         201
+  C:099FH         LINE#         203
+  C:09A4H         LINE#         204
+  C:09AEH         LINE#         205
+  C:09C9H         LINE#         206
+  C:09D3H         LINE#         207
+  -------         ENDPROC       _SX1276LORASETSPREADINGFACTOR
+  -------         PROC          _SX1276LORASETERRORCODING
+  X:00A9H         SYMBOL        value
+  -------         DO            
+  X:00AAH         SYMBOL        RECVER_DAT
+  -------         ENDDO         
+  C:0AB0H         LINE#         209
+  C:0AB5H         LINE#         211
+  C:0ABFH         LINE#         212
+  C:0AD9H         LINE#         214
+  C:0AE3H         LINE#         216
+  -------         ENDPROC       _SX1276LORASETERRORCODING
+  -------         PROC          _SX1276LORASETSIGNALBANDWIDTH
+  X:00ABH         SYMBOL        bw
+  -------         DO            
+  X:00ACH         SYMBOL        RECVER_DAT
+  -------         ENDDO         
+  C:0A7BH         LINE#         218
+  C:0A80H         LINE#         220
+  C:0A8AH         LINE#         221
+  C:0AA5H         LINE#         222
+  C:0AAFH         LINE#         224
+  -------         ENDPROC       _SX1276LORASETSIGNALBANDWIDTH
+  -------         PROC          _SX1276LORASETIMPLICITHEADERON
+  X:00ADH         SYMBOL        enable
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  01/15/2024  16:44:12  PAGE 9
+
+
+  -------         DO            
+  X:00AEH         SYMBOL        RECVER_DAT
+  -------         ENDDO         
+  C:0B46H         LINE#         226
+  C:0B4BH         LINE#         228
+  C:0B55H         LINE#         229
+  C:0B6BH         LINE#         231
+  C:0B75H         LINE#         232
+  -------         ENDPROC       _SX1276LORASETIMPLICITHEADERON
+  -------         PROC          _SX1276LORASETPAYLOADLENGTH
+  X:00BCH         SYMBOL        value
+  C:0C72H         LINE#         234
+  C:0C77H         LINE#         235
+  C:0C81H         LINE#         236
+  -------         ENDPROC       _SX1276LORASETPAYLOADLENGTH
+  -------         PROC          _SX1276LORASETSYMBTIMEOUT
+  X:008CH         SYMBOL        value
+  -------         DO            
+  X:008EH         SYMBOL        RECVER_DAT
+  -------         ENDDO         
+  C:06E3H         LINE#         238
+  C:06EBH         LINE#         240
+  C:06F5H         LINE#         241
+  C:06FFH         LINE#         242
+  C:0720H         LINE#         244
+  C:0731H         LINE#         245
+  C:073BH         LINE#         246
+  C:0745H         LINE#         247
+  -------         ENDPROC       _SX1276LORASETSYMBTIMEOUT
+  -------         PROC          _SX1276LORASETMOBILENODE
+  X:00AFH         SYMBOL        enable
+  -------         DO            
+  X:00B0H         SYMBOL        RECVER_DAT
+  -------         ENDDO         
+  C:0A0EH         LINE#         249
+  C:0A13H         LINE#         251
+  C:0A1DH         LINE#         252
+  C:0A3AH         LINE#         254
+  C:0A44H         LINE#         255
+  -------         ENDPROC       _SX1276LORASETMOBILENODE
+  -------         PROC          RF_RECEIVE
+  C:0B76H         LINE#         257
+  C:0B76H         LINE#         258
+  C:0B7BH         LINE#         259
+  C:0B82H         LINE#         260
+  C:0B89H         LINE#         261
+  C:0B90H         LINE#         262
+  C:0B97H         LINE#         263
+  C:0B9CH         LINE#         265
+  -------         ENDPROC       RF_RECEIVE
+  -------         PROC          _SX1276LORASETPACKETCRCON
+  X:00B1H         SYMBOL        enable
+  -------         DO            
+  X:00B2H         SYMBOL        RECVER_DAT
+  -------         ENDDO         
+  C:0A45H         LINE#         267
+  C:0A4AH         LINE#         269
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  01/15/2024  16:44:12  PAGE 10
+
+
+  C:0A54H         LINE#         270
+  C:0A70H         LINE#         272
+  C:0A7AH         LINE#         273
+  -------         ENDPROC       _SX1276LORASETPACKETCRCON
+  -------         PROC          _SX1276LORAFSK
+  X:00B3H         SYMBOL        opMode
+  -------         DO            
+  X:00B4H         SYMBOL        opModePrev
+  -------         ENDDO         
+  C:09D4H         LINE#         275
+  C:09D9H         LINE#         277
+  C:09E3H         LINE#         278
+  C:09F1H         LINE#         279
+  C:0A03H         LINE#         280
+  C:0A0DH         LINE#         281
+  -------         ENDPROC       _SX1276LORAFSK
+  -------         PROC          _SX1276LORASETRFPOWER
+  X:00BDH         SYMBOL        power
+  C:0B9DH         LINE#         284
+  C:0BA2H         LINE#         285
+  C:0BA9H         LINE#         286
+  C:0BBFH         LINE#         287
+  -------         ENDPROC       _SX1276LORASETRFPOWER
+  -------         PROC          SX1276LORA_INT
+  C:0618H         LINE#         293
+  C:0618H         LINE#         294
+  C:061DH         LINE#         295
+  C:0622H         LINE#         296
+  C:0627H         LINE#         297
+  C:062EH         LINE#         298
+  C:0635H         LINE#         299
+  C:063CH         LINE#         300
+  C:063FH         LINE#         301
+  C:0647H         LINE#         302
+  C:064FH         LINE#         303
+  C:0657H         LINE#         304
+  C:065CH         LINE#         305
+  C:0664H         LINE#         306
+  C:0669H         LINE#         307
+  C:066EH         LINE#         308
+  C:0675H         LINE#         309
+  C:067AH         LINE#         310
+  C:067DH         LINE#         313
+  -------         ENDPROC       SX1276LORA_INT
+  -------         PROC          _FUN_RF_SENDPACKET
+  X:0083H         SYMBOL        RF_TRAN_P
+  X:0086H         SYMBOL        LEN
+  -------         DO            
+  X:0087H         SYMBOL        ASM_i
+  -------         ENDDO         
+  C:02EFH         LINE#         320
+  C:02FFH         LINE#         321
+  C:02FFH         LINE#         324
+  C:0304H         LINE#         325
+  C:030BH         LINE#         326
+  C:0312H         LINE#         327
+  C:031CH         LINE#         328
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  01/15/2024  16:44:12  PAGE 11
+
+
+  C:0323H         LINE#         329
+  C:032AH         LINE#         330
+  C:033EH         LINE#         331
+  C:0352H         LINE#         332
+  C:0366H         LINE#         333
+  C:0387H         LINE#         334
+  C:0391H         LINE#         335
+  C:0399H         LINE#         336
+  C:03ADH         LINE#         337
+  C:03B4H         LINE#         338
+  C:03BBH         LINE#         339
+  C:03C0H         LINE#         340
+  -------         ENDPROC       _FUN_RF_SENDPACKET
+  -------         ENDMOD        SX1278
+
+  -------         MODULE        UART
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0080H         PUBLIC        P0
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+  D:00C0H         PUBLIC        P4
+  D:00C8H         PUBLIC        P5
+  B:00A8H.7       PUBLIC        EA
+  D:00E8H         PUBLIC        P6
+  D:00F8H         PUBLIC        P7
+  D:00A8H         PUBLIC        IE
+  B:00A8H.4       PUBLIC        ES
+  D:00B8H         PUBLIC        IP
+  B:0098H.0       PUBLIC        RI
+  B:0098H.1       PUBLIC        TI
+  D:00D8H         PUBLIC        CCON
+  C:0BFFH         PUBLIC        _UART_SendData
+  D:0099H         PUBLIC        SBUF
+  D:0098H         PUBLIC        SCON
+  C:0C1DH         PUBLIC        UartInit
+  D:0088H         PUBLIC        TCON
+  B:00B0H.4       PUBLIC        P34
+  C:0204H         PUBLIC        UART1_IRQ
+  D:008EH         PUBLIC        AUXR
+  B:0020H.0       PUBLIC        busy
+  C:0922H         PUBLIC        _uartSend
+  B:0098H.3       PUBLIC        TB8
+  D:00D6H         PUBLIC        T2H
+  D:00D7H         PUBLIC        T2L
+  X:0049H         PUBLIC        USART_RX_BUF
+  X:005DH         PUBLIC        USART_RX_STA
+  D:00A2H         PUBLIC        AUXR1
+  D:00D0H         PUBLIC        PSW
+  X:005FH         PUBLIC        buffer
+  B:0020H.1       SYMBOL        bUartFlag
+  -------         PROC          UARTINIT
+  C:0C1DH         LINE#         12
+  C:0C1DH         LINE#         13
+  C:0C1DH         LINE#         15
+  C:0C20H         LINE#         16
+  C:0C23H         LINE#         17
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  01/15/2024  16:44:12  PAGE 12
+
+
+  C:0C26H         LINE#         18
+  C:0C29H         LINE#         19
+  C:0C2CH         LINE#         20
+  C:0C2FH         LINE#         21
+  C:0C32H         LINE#         22
+  C:0C34H         LINE#         23
+  C:0C36H         LINE#         24
+  C:0C38H         LINE#         25
+  -------         ENDPROC       UARTINIT
+  -------         PROC          _UART_SENDDATA
+  X:00B5H         SYMBOL        Byte
+  -------         DO            
+  X:00B6H         SYMBOL        temp
+  -------         ENDDO         
+  C:0BFFH         LINE#         28
+  C:0C04H         LINE#         29
+  C:0C04H         LINE#         31
+  C:0C07H         LINE#         33
+  C:0C11H         LINE#         34
+  C:0C13H         LINE#         36
+  C:0C15H         LINE#         37
+  C:0C1CH         LINE#         38
+  -------         ENDPROC       _UART_SENDDATA
+  -------         PROC          _UARTSEND
+  X:0090H         SYMBOL        pS
+  X:0093H         SYMBOL        len
+  C:0922H         LINE#         46
+  C:0932H         LINE#         47
+  C:0932H         LINE#         48
+  C:0937H         LINE#         50
+  C:0941H         LINE#         51
+  C:0941H         LINE#         52
+  C:0958H         LINE#         54
+  C:095AH         LINE#         55
+  C:095FH         LINE#         56
+  -------         ENDPROC       _UARTSEND
+  -------         PROC          UART1_IRQ
+  -------         DO            
+  X:00BEH         SYMBOL        res
+  -------         ENDDO         
+  C:0204H         LINE#         59
+  C:020FH         LINE#         61
+  C:0214H         LINE#         62
+  C:0217H         LINE#         63
+  C:0217H         LINE#         64
+  C:0219H         LINE#         65
+  C:021BH         LINE#         66
+  C:021BH         LINE#         67
+  C:0220H         LINE#         68
+  C:0220H         LINE#         69
+  C:0222H         LINE#         71
+  C:0228H         LINE#         72
+  C:022AH         LINE#         74
+  C:0236H         LINE#         75
+  C:0236H         LINE#         76
+  C:0243H         LINE#         77
+  C:0243H         LINE#         78
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  01/15/2024  16:44:12  PAGE 13
+
+
+  C:0257H         LINE#         79
+  C:026FH         LINE#         80
+  C:0271H         LINE#         82
+  C:0271H         LINE#         83
+  C:028EH         LINE#         84
+  C:029CH         LINE#         85
+  C:029CH         LINE#         86
+  C:029CH         LINE#         88
+  C:02A9H         LINE#         89
+  C:02A9H         LINE#         90
+  C:02B1H         LINE#         91
+  C:02C5H         LINE#         92
+  C:02C5H         LINE#         94
+  C:02DAH         LINE#         95
+  C:02DAH         LINE#         96
+  C:02E2H         LINE#         98
+  C:02E2H         LINE#         99
+  C:02E4H         LINE#         101
+  C:02E6H         LINE#         102
+  -------         ENDPROC       UART1_IRQ
+  -------         ENDMOD        UART
+
+  -------         MODULE        GPIO
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0092H         PUBLIC        P1M0
+  D:0091H         PUBLIC        P1M1
+  D:0080H         PUBLIC        P0
+  D:00B2H         PUBLIC        P3M0
+  D:0090H         PUBLIC        P1
+  D:00B1H         PUBLIC        P3M1
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+  D:00C0H         PUBLIC        P4
+  D:00C8H         PUBLIC        P5
+  D:00E8H         PUBLIC        P6
+  D:00F8H         PUBLIC        P7
+  D:00A8H         PUBLIC        IE
+  D:00B8H         PUBLIC        IP
+  D:00D8H         PUBLIC        CCON
+  D:0098H         PUBLIC        SCON
+  D:0088H         PUBLIC        TCON
+  B:00B0H.6       PUBLIC        P36
+  B:00B0H.7       PUBLIC        P37
+  C:0C61H         PUBLIC        hardwareInit
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          HARDWAREINIT
+  C:0C61H         LINE#         8
+  C:0C61H         LINE#         9
+  C:0C61H         LINE#         10
+  C:0C64H         LINE#         11
+  C:0C67H         LINE#         12
+  C:0C6AH         LINE#         13
+  C:0C6DH         LINE#         15
+  C:0C6FH         LINE#         16
+  C:0C71H         LINE#         17
+  -------         ENDPROC       HARDWAREINIT
+  -------         ENDMOD        GPIO
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  01/15/2024  16:44:12  PAGE 14
+
+
+
+  -------         MODULE        LORA
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0080H         PUBLIC        P0
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+  D:00C0H         PUBLIC        P4
+  D:00C8H         PUBLIC        P5
+  D:00E8H         PUBLIC        P6
+  D:00F8H         PUBLIC        P7
+  X:0067H         PUBLIC        nodeBrokenFlag
+  D:00A8H         PUBLIC        IE
+  D:00B8H         PUBLIC        IP
+  D:00D8H         PUBLIC        CCON
+  X:0068H         PUBLIC        recv
+  D:0098H         PUBLIC        SCON
+  D:0088H         PUBLIC        TCON
+  C:084AH         PUBLIC        loraNodeSleep
+  C:0800H         PUBLIC        loraCommunicateStart
+  C:0CA0H         SYMBOL        _?ix1000
+  C:0CA2H         SYMBOL        _?ix1001
+  C:0C82H         PUBLIC        loraInit
+  X:007CH         PUBLIC        overTime
+  D:00D0H         PUBLIC        PSW
+  C:0AE4H         PUBLIC        _loraTx
+  -------         PROC          LORAINIT
+  C:0C82H         LINE#         16
+  C:0C82H         LINE#         17
+  C:0C82H         LINE#         18
+  C:0C8BH         LINE#         19
+  C:0C8EH         LINE#         20
+  C:0C91H         LINE#         23
+  -------         ENDPROC       LORAINIT
+  -------         PROC          _LORATX
+  X:0094H         SYMBOL        dat
+  X:0097H         SYMBOL        len
+  C:0AE4H         LINE#         25
+  C:0AF4H         LINE#         26
+  C:0AF4H         LINE#         27
+  C:0AFBH         LINE#         28
+  C:0B0EH         LINE#         29
+  C:0B15H         LINE#         31
+  -------         ENDPROC       _LORATX
+  -------         PROC          LORACOMMUNICATESTART
+  -------         DO            
+  X:00B7H         SYMBOL        arr
+  -------         ENDDO         
+  C:0800H         LINE#         190
+  C:0800H         LINE#         191
+  C:0800H         LINE#         192
+  C:0825H         LINE#         193
+  C:0830H         LINE#         194
+  C:0837H         LINE#         195
+  C:0842H         LINE#         196
+  C:0849H         LINE#         197
+  -------         ENDPROC       LORACOMMUNICATESTART
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  01/15/2024  16:44:12  PAGE 15
+
+
+  -------         PROC          LORANODESLEEP
+  -------         DO            
+  X:00B9H         SYMBOL        arr
+  -------         ENDDO         
+  C:084AH         LINE#         200
+  C:084AH         LINE#         201
+  C:084AH         LINE#         202
+  C:086FH         LINE#         204
+  C:087AH         LINE#         205
+  C:0881H         LINE#         206
+  C:088CH         LINE#         207
+  C:0893H         LINE#         208
+  -------         ENDPROC       LORANODESLEEP
+  -------         ENDMOD        LORA
+
+  -------         MODULE        DELAY
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0080H         PUBLIC        P0
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+  D:00C0H         PUBLIC        P4
+  D:00C8H         PUBLIC        P5
+  D:00E8H         PUBLIC        P6
+  D:00F8H         PUBLIC        P7
+  C:0C39H         PUBLIC        Delay5ms
+  D:00A8H         PUBLIC        IE
+  D:00B8H         PUBLIC        IP
+  D:00D8H         PUBLIC        CCON
+  D:0098H         PUBLIC        SCON
+  D:0088H         PUBLIC        TCON
+  C:0C92H         PUBLIC        Delay10us
+  C:0BC0H         PUBLIC        Delay100ms
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          DELAY10US
+  -------         DO            
+  D:0010H         SYMBOL        i
+  -------         ENDDO         
+  C:0C92H         LINE#         12
+  C:0C92H         LINE#         13
+  C:0C92H         LINE#         16
+  C:0C93H         LINE#         17
+  C:0C94H         LINE#         18
+  C:0C95H         LINE#         19
+  C:0C98H         LINE#         20
+  C:0C9FH         LINE#         21
+  -------         ENDPROC       DELAY10US
+  -------         PROC          DELAY100MS
+  -------         DO            
+  D:0011H         SYMBOL        i
+  D:0012H         SYMBOL        j
+  D:0013H         SYMBOL        k
+  -------         ENDDO         
+  C:0BC0H         LINE#         24
+  C:0BC0H         LINE#         25
+  C:0BC0H         LINE#         28
+  C:0BC1H         LINE#         29
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  01/15/2024  16:44:12  PAGE 16
+
+
+  C:0BC2H         LINE#         30
+  C:0BC5H         LINE#         31
+  C:0BC8H         LINE#         32
+  C:0BCBH         LINE#         34
+  C:0BCBH         LINE#         36
+  C:0BCBH         LINE#         37
+  C:0BD2H         LINE#         38
+  C:0BD9H         LINE#         39
+  C:0BE0H         LINE#         40
+  -------         ENDPROC       DELAY100MS
+  -------         PROC          DELAY5MS
+  -------         DO            
+  D:0014H         SYMBOL        i
+  D:0015H         SYMBOL        j
+  -------         ENDDO         
+  C:0C39H         LINE#         43
+  C:0C39H         LINE#         44
+  C:0C39H         LINE#         47
+  C:0C3CH         LINE#         48
+  C:0C3FH         LINE#         50
+  C:0C3FH         LINE#         51
+  C:0C46H         LINE#         52
+  C:0C4DH         LINE#         53
+  -------         ENDPROC       DELAY5MS
+  -------         ENDMOD        DELAY
+
+  -------         MODULE        SYNCHRON
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0080H         PUBLIC        P0
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+  D:00C0H         PUBLIC        P4
+  D:00C8H         PUBLIC        P5
+  D:00E8H         PUBLIC        P6
+  D:00F8H         PUBLIC        P7
+  D:00A8H         PUBLIC        IE
+  X:007DH         PUBLIC        currentNode
+  D:00B8H         PUBLIC        IP
+  X:007EH         PUBLIC        lastPeriod
+  D:00D8H         PUBLIC        CCON
+  D:0098H         PUBLIC        SCON
+  B:00B0H.1       PUBLIC        P31
+  D:0088H         PUBLIC        TCON
+  X:0080H         PUBLIC        synPeriod
+  C:07F4H         PUBLIC        getReadySign
+  X:0082H         PUBLIC        synReady
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          GETREADYSIGN
+  C:07F4H         LINE#         13
+  C:07F4H         LINE#         14
+  C:07F4H         LINE#         20
+  C:07F7H         LINE#         21
+  C:07FAH         LINE#         23
+  C:07FCH         LINE#         24
+  -------         ENDPROC       GETREADYSIGN
+  -------         ENDMOD        SYNCHRON
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  01/15/2024  16:44:12  PAGE 17
+
+
+
+  -------         MODULE        NUMTOOLS
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0080H         PUBLIC        P0
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+  D:00C0H         PUBLIC        P4
+  D:00C8H         PUBLIC        P5
+  D:00E8H         PUBLIC        P6
+  D:00F8H         PUBLIC        P7
+  D:00A8H         PUBLIC        IE
+  D:00B8H         PUBLIC        IP
+  D:00D8H         PUBLIC        CCON
+  D:0098H         PUBLIC        SCON
+  D:0088H         PUBLIC        TCON
+  D:00D0H         PUBLIC        PSW
+  -------         ENDMOD        NUMTOOLS
+
+  -------         MODULE        ?C?COPY
+  C:00F6H         PUBLIC        ?C?COPY
+  -------         ENDMOD        ?C?COPY
+
+  -------         MODULE        ?C?CLDPTR
+  C:011CH         PUBLIC        ?C?CLDPTR
+  -------         ENDMOD        ?C?CLDPTR
+
+  -------         MODULE        ?C?IILDX
+  C:0135H         PUBLIC        ?C?IILDX
+  -------         ENDMOD        ?C?IILDX
+
+  -------         MODULE        ?C?ILDIX
+  C:014BH         PUBLIC        ?C?ILDIX
+  -------         ENDMOD        ?C?ILDIX
+
+  -------         MODULE        ?C?PLDPTR
+  C:0161H         PUBLIC        ?C?PLDPTR
+  -------         ENDMOD        ?C?PLDPTR
+
+  -------         MODULE        ?C?PLDOPTR
+  C:0181H         PUBLIC        ?C?PLDOPTR
+  -------         ENDMOD        ?C?PLDOPTR
+
+  -------         MODULE        ?C?CCASE
+  C:01B1H         PUBLIC        ?C?CCASE
+  -------         ENDMOD        ?C?CCASE
+
+  -------         MODULE        ?C?ICALL
+  C:01D7H         PUBLIC        ?C?ICALL
+  C:01DBH         PUBLIC        ?C?ICALL2
+  -------         ENDMOD        ?C?ICALL
+
+  -------         MODULE        ?C?PLDIDATA
+  C:01DDH         PUBLIC        ?C?PLDIDATA
+  -------         ENDMOD        ?C?PLDIDATA
+
+  -------         MODULE        ?C?PLDXDATA
+BL51 BANKED LINKER/LOCATER V6.22.2.0                                                  01/15/2024  16:44:12  PAGE 18
+
+
+  C:01E6H         PUBLIC        ?C?PLDXDATA
+  -------         ENDMOD        ?C?PLDXDATA
+
+  -------         MODULE        ?C?PLDPDATA
+  C:01EFH         PUBLIC        ?C?PLDPDATA
+  -------         ENDMOD        ?C?PLDPDATA
+
+  -------         MODULE        ?C?PLDCODE
+  C:01F8H         PUBLIC        ?C?PLDCODE
+  -------         ENDMOD        ?C?PLDCODE
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?HARDWAREINIT?GPIO
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?LORAINIT?LORA
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?LORACOMMUNICATESTART?LORA
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?LORANODESLEEP?LORA
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?DELAY100MS?DELAY
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?GETREADYSIGN?SYNCHRON
+
+Program Size: data=23.2 xdata=191 code=3232
+LINK/LOCATE RUN COMPLETE.  6 WARNING(S),  0 ERROR(S)
